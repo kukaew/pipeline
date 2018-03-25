@@ -23,13 +23,11 @@ body, #canvas{
 #canvas {}
 #canvas2 {
 	width: 0;
-	background-color: transparent;
-	/* transition: 1s; */
+	/* background-color: #424d5f80; */
 }
 #canvas2.viz {
 	display: block;
 	width: 100%;
-	/* transition: 1s; */
 }
 *:focus, *:active {
 	outline: 0;
