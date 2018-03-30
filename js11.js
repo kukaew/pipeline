@@ -4,28 +4,32 @@ var canvas = document.getElementById('canvas'),
 	ctx2 = canvas2.getContext('2d'),
 	step = shg= 0,
 	scr1 = scr2 = 100,
-	clr = 120,
+	clr = 180,
 	direct,prg,vert,
 	blr = 100,
 	rad = 3, 
 	udr = 2,
 	raddir = 0.1,
-	clrdir = -1,
+	clrdir = 3,
 	scrlh=document.body.clientHeight,
 	scrlw=document.body.clientWidth,
 	centrX = x = Math.round(scrlw/4)*2,
 	centrY = y = Math.round(scrlh/4)*2,
-	timer = 1,
+	timer = anim = 1,
 	lght = 85;
 canvas.setAttribute('width', scrlw);
 canvas.setAttribute('height', scrlh);
 canvas2.setAttribute('width', scrlw);
 canvas2.setAttribute('height', scrlh);
-ctx.lineWidth = 2;
-if (scrlh<scrlw) vert = false; //prg = Math.round(scrlh/2
-else vert = true;//prg = Math.round(scrlw/2)
 
+if (scrlh<scrlw) vert = false, fsz = scrlh/5; //prg = Math.round(scrlh/2
+else vert = true, fsz = scrlw/5;//prg = Math.round(scrlw/2)
+
+if (fsz>100) fsz = 100;
+
+canvas2.onmousedown = omdown2;
 function draw() {
+	ctx.lineWidth = 2;
 	ctx.beginPath();
 	if (step == 0)
 	{
@@ -72,8 +76,8 @@ function draw() {
 			y=y-shg;
 			break;
 	}
-	if (clr >= 120) clrdir = -1;
-	else if (clr <= 0) clrdir = 1;
+	if (clr >= 300) clrdir = -3;
+	else if (clr <= 180) clrdir = 3;
 	if (blr == 0) blr = 100;
 	if (rad > 30) raddir = -0.1;
 	if (rad < 5 && rad > 0) raddir = 0.1;
@@ -85,8 +89,8 @@ function draw() {
 	if (vert) //ВЕРТИКАЛЬНЫЙ
 	{
 		switch (true) {
-			case (y<rad*2+22): pwin(2); break;
-			case (y>scrlh-22): pwin(1); break;
+			case (y<rad*2+16): pwin(2); break;
+			case (y>scrlh-16): pwin(1); break;
 			case (x<rad*2): step = 0, x = x + 3; break;
 			case (x>scrlw): step = 0, x = x - 3; break;
 		}
@@ -94,9 +98,9 @@ function draw() {
 	else //ГОРИЗОНТАЛЬНЫЙ
 	{
 		switch (true) {
-			case (x<rad*2+22): pwin(2);
+			case (x<rad*2+16): pwin(2);
 			break;
-			case (x>scrlw-22): pwin(1);
+			case (x>scrlw-16): pwin(1);
 			break;
 			case (y<rad*2|| y>scrlh):
 				switch (direct) {
@@ -117,9 +121,9 @@ function draw() {
 }
 ctx.fillStyle = '#FFF';
 score(scr1,scr2);
-lghtbx('PIPELINE','PIPELINE',55,1);
-lghtbx('PIPELINE','PIPELINE',55,2);
-lghtbx('PIPELINE','PIPELINE',55,3);
+/*lghtbx('PIPELINE','PIPELINE',55,1);
+lghtbx('PIPELINE','PIPELINE',55,2);*/
+//lghtbx('PIPELINE','PIPELINE',55,3);
 canvas.onmousedown = omdown;
 canvas.onmouseup = omup;
 canvas.addEventListener('touchstart', omdown,false);
@@ -151,7 +155,7 @@ function pwin(win){
 	step = 0;
 }
 function omdown() {
-	udr = clr + 15;
+	udr = clr - 160;
 	step = 0;
 	clrdir = 0;
 	ctx.lineWidth =0;
@@ -169,7 +173,7 @@ function omdown2() {
 	udr = 2;
 	shg = 4;
 	canvas2.onmousedown = null;
-
+	clearInterval(anim);
 	timer = setInterval(function() {
   		draw();
 	}, 10);
@@ -196,51 +200,107 @@ function score(scrst,scrst2,win){
 	ctx.beginPath();
 	canvas2.classList = 'viz';
 
-	var h1 = (scrlh/100*scr1-20)/2, h2 = (scrlh/100*scr2-20)/2;
+	if (win==1) lghtbx(rad,1);
+	else if (win==2) lghtbx(rad,2);
 
-	//ctx.fillStyle = '#fff';
-	//ctx.strokeStyle = '#000';
-
+	ctx.lineWidth = 4;
 	if (vert)
 	{
-		if (win==1) lghtbx(scrst-rad+'+'+rad+'='+scrst,scrst2+rad+'-'+rad+'='+scrst2, 100,1);
-		else if (win==2) lghtbx(scrst+rad+'-'+rad+'='+scrst,scrst2-rad+'+'+rad+'='+scrst2, 100,2);
+		var h1 = (scrlw/100*scr1-40)/2, h2 = (scrlw/100*scr2-40)/2;
 
-		ctx.fillRect(10,0,scrlw-20,22);
-		ctx.fillRect(10,scrlh-22,scrlw-20,22);
-		ctx.strokeRect(10,0,scrlw-20,22);
-		ctx.strokeRect(10,scrlh-22,scrlw-20,22);
+		ctx.strokeRect(10,2,scrlw-20,13);
+		ctx.fillRect(10,2,scrlw-20,13);	
+
+		ctx.strokeRect(10,scrlh-15,scrlw-20,13);
+		ctx.fillRect(10,scrlh-15,scrlw-20,13);
+
+		ctx.fillStyle = '#fff';
+
+		ctx.strokeRect(15,6,h1,5);
+		ctx.fillRect(15,6,h1,5);
+
+		ctx.strokeRect(15,scrlh-11,h2,5);
+		ctx.fillRect(15,scrlh-11,h2,5);
 	}
 	else 
 	{
-		if (win==1) 
-		{
-			lghtbx('='+scrst2,scrst+rad, 100,1);
-			lghtbx('-'+rad,'+'+rad, 100,3);
-			lghtbx('='+scrst,scrst2-rad, 100,2);
-		}
-		else if (win==2)
-		{			
-			lghtbx('='+scrst,scrst2+rad, 100,2);
-			lghtbx('+'+rad,'-'+rad, 100,3);
-			lghtbx('='+scrst2,scrst-rad, 100,1);
-		}
+		var h1 = (scrlh/100*scr1-40)/2, h2 = (scrlh/100*scr2-40)/2;
 
-		ctx.fillRect(0,10,22,scrlh-20);
-		ctx.fillRect(scrlw-22,10,22,scrlh-20);
-		ctx.strokeRect(0,10,22,scrlh-20);
-		ctx.strokeRect(scrlw-22,10,22,scrlh-20);
+		ctx.strokeRect(2,10,14,scrlh-20);		
+		ctx.fillRect(2,10,14,scrlh-20);
 
-		ctx.fillStyle = '#f66';
+		ctx.strokeRect(scrlw-16,10,14,scrlh-20);
+		ctx.fillRect(scrlw-16,10,14,scrlh-20);
 
+		ctx.fillStyle = '#fff';
 
-		ctx.fillRect(scrlw-18,h1+5,14,h2);
-		ctx.fillRect(4,h2+5,14,h1);
-		ctx.strokeRect(scrlw-18,h1+5,14,h2);
-		ctx.strokeRect(4,h2+5,14,h1);
+		ctx.strokeRect(6,h2+25,5,h1);
+		ctx.fillRect(6,h2+25,5,h1);
+
+		ctx.strokeRect(scrlw-11,h1+25,5,h2);
+		ctx.fillRect(scrlw-11,h1+25,5,h2);
 	}
 }
-function lghtbx(txt,txt2,fsz,win) 
+function lghtbx(col,win){
+	ctx2.clearRect(0,0,scrlw,scrlh);
+	var clrs=5,txt=txt2='',clr2=300,sdvs=8,xl=yl=xl2=yl2=itr=xr=yr=sdvx=sdvy=0;
+
+	if (win==1) var xs = ys = 4, xs2 = ys2 = -4;
+	else var xs = ys = -4, xs2 = ys2 = 4;
+
+	ctx2.textAlign="center";
+	ctx2.textBaseline="middle";
+	ctx2.lineWidth=4;
+	ctx2.font='bold italic '+fsz+'px monospace';
+
+	anim=setInterval(function(){
+		xr = scrlw/2-sdvx;
+		yr = scrlh/2+sdvy;
+		itr=itr+col/25;
+
+		txt='+'+Math.round(itr);
+		txt2='-'+Math.round(itr);
+
+		ctx2.fillStyle='hsl('+clr2+',50%,80%)';
+		ctx2.strokeStyle='hsl('+clr2+',50%,25%)';
+
+		ctx2.strokeText(txt, xr+xl, yr+yl);
+		ctx2.fillText(txt, xr+xl, yr+yl);
+
+		ctx2.strokeText(txt2, xr+xl2, yr+yl2);
+		ctx2.fillText(txt2, xr+xl2, yr+yl2);
+
+		ctx2.fillStyle='#fff';
+
+		ctx2.strokeText(txt, xr+xl+xs, yr+yl+ys);
+		ctx2.fillText(txt, xr+xl+xs, yr+yl+ys);
+
+		ctx2.strokeText(txt2, xr+xl2+xs2, yr+yl2+ys2);
+		ctx2.fillText(txt2, xr+xl2+xs2, yr+yl2+ys2);
+
+		xl=xl+xs;
+		yl=yl+ys;
+		xl2=xl2+xs2;
+		yl2=yl2+ys2;
+
+		if (clr2==180) clrs=5;
+		if (clr2==300) clrs=-5;
+		clr2=clr2+clrs;
+
+		if (itr>=col)
+		{
+			itr=xl=yl=xl2=yl2=0;
+
+			sdvx=sdvx+sdvs;
+			if (sdvx < -10) sdvs=8;
+			if (sdvx > 10) sdvs=-8;
+			canvas2.onmousedown = omdown2;
+		}
+
+	},20);
+}
+
+function lghtbx2(txt,txt2,fsz,win) 
 {
 	ctx2.clearRect(0,0,scrlw,scrlh);
 
