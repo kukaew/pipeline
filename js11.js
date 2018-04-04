@@ -5,7 +5,7 @@ var canvas = document.getElementById('canvas'),
 	step = shg = strt = 0,
 	scr1 = scr2 = 100,
 	clr = 180,
-	direct,prg,vert,
+	direct,prg,
 	blr = 100,
 	rad = 3, 
 	udr = 2,
@@ -17,19 +17,19 @@ var canvas = document.getElementById('canvas'),
 	centrY = y = Math.round(scrlh/4)*2,
 	timer = anim = lvl = plr = 1,
 	lght = 85;
+
+if (scrlh<scrlw) var vert = false, fsz = scrlh/7,arw1 = '→→→', arw2 = '←←←';
+else var vert = true, fsz = scrlw/7, arw1 = '↑↑↑', arw2 = '↓↓↓';
+
 canvas.setAttribute('width', scrlw);
 canvas.setAttribute('height', scrlh);
 canvas2.setAttribute('width', scrlw);
 canvas2.setAttribute('height', scrlh);
 
-if (scrlh<scrlw) vert = false, fsz = scrlh/7;
-else vert = true, fsz = scrlw/7;
-if (fsz>80) fsz = 80;
-canvas2.classList = 'viz';
-
-
 lghtbx(15,0,0,6);
 
+if (fsz>80) fsz = 80;
+canvas2.classList = 'viz';
 canvas2.onmousedown = omdown2;
 function draw()
 {
@@ -92,20 +92,22 @@ function draw()
 	ctx.fillStyle = 'hsl('+clr+',100%,'+lght+'%)';
 	if (vert) //ВЕРТИКАЛЬНЫЙ
 	{
+		var arw1 = '↑•↑', arw2 = '↓•↓';
 		switch (true) 
 		{
-			case (y<rad*2+16): pwin(2); break;
-			case (y>scrlh-16): pwin(1); break;
+			case (y<rad*2+16): pwin(1); break;
+			case (y>scrlh-16): pwin(2); break;
 			case (x<rad*2): step = 0, x = x + 3; break;
 			case (x>scrlw): step = 0, x = x - 3; break;
 		}
 	}
 	else //ГОРИЗОНТАЛЬНЫЙ
 	{
+		var arw1 = '→•→', arw2 = '←•←';
 		switch (true)
 		{
-			case (x<rad*2+16): pwin(2);	break;
-			case (x>scrlw-16): pwin(1);	break;
+			case (x<rad*2+16): pwin(1);	break;
+			case (x>scrlw-16): pwin(2);	break;
 			case (y<rad*2|| y>scrlh):
 				switch (direct)
 				{
@@ -141,11 +143,11 @@ function pwin(win)
 
 	if (scr2 >= 200) 
 	{
-		lghtbx(15,0,0,4);
+		lghtbx(15,0,0,3);
 		scr1 = scr2 = 100;
 	}
 	else if (scr1 >= 200) {
-		lghtbx(15,0,0,3);
+		lghtbx(15,0,0,4);
 		scr1 = scr2 = 100;
 	}
 	else score(scr1,scr2,win);
@@ -290,10 +292,10 @@ canvas2.classList = 'viz';
 			txt0='Game_________', txt02='revo_________';
 			break;
 		case 6:
-			txt0='Player______________', txt02='eno_________________';
+			txt0='Player'+arw1+arw1+arw1, txt02=arw1+'ENO'+arw1+arw1+arw1;
 			break;
 		case 7:
-			txt0='Player______________', txt02='owt_________________';
+			txt0='Player'+arw2+arw2+arw2, txt02=arw2+'OWT'+arw2+arw2+arw2;
 			break;
 		case 8:
 			txt0=lvl+'__________', txt02='level__________';
