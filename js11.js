@@ -20,6 +20,7 @@ var canvas = document.getElementById('canvas'),
 
 if (scrlh<scrlw) var vert = false, fsz = scrlh/7,arw1 = '→→→', arw2 = '←←←';
 else var vert = true, fsz = scrlw/7, arw1 = '↑↑↑', arw2 = '↓↓↓';
+if (fsz>80) fsz = 80;
 
 canvas.setAttribute('width', scrlw);
 canvas.setAttribute('height', scrlh);
@@ -28,7 +29,7 @@ canvas2.setAttribute('height', scrlh);
 
 lghtbx(15,0,0,6);
 
-if (fsz>80) fsz = 80;
+
 canvas2.classList = 'viz';
 canvas2.onmousedown = omdown2;
 function draw()
@@ -92,7 +93,6 @@ function draw()
 	ctx.fillStyle = 'hsl('+clr+',100%,'+lght+'%)';
 	if (vert) //ВЕРТИКАЛЬНЫЙ
 	{
-		var arw1 = '↑•↑', arw2 = '↓•↓';
 		switch (true) 
 		{
 			case (y<rad*2+16): pwin(1); break;
@@ -103,7 +103,6 @@ function draw()
 	}
 	else //ГОРИЗОНТАЛЬНЫЙ
 	{
-		var arw1 = '→•→', arw2 = '←•←';
 		switch (true)
 		{
 			case (x<rad*2+16): pwin(1);	break;
@@ -283,19 +282,19 @@ canvas2.classList = 'viz';
 			s2=s2+col; s1=s1-col;
 			break;
 		case 3:
-			txt0='A_winner________', txt02='tsrif_si________';
+			txt0='a_winner________', txt02='tsrif_si________';
 			break;
 		case 4:
-			txt0='A_winner_________', txt02='dnoces_si________';
+			txt0='a_winner_________', txt02='dnoces_si________';
 			break;
 		case 5:
-			txt0='Game_________', txt02='revo_________';
+			txt0='game_________', txt02='revo_________';
 			break;
 		case 6:
-			txt0='Player'+arw1+arw1+arw1, txt02=arw1+'ENO'+arw1+arw1+arw1;
+			txt0='player'+arw1+arw1+arw1, txt02='eno'+arw1+arw1+arw1+arw1;
 			break;
 		case 7:
-			txt0='Player'+arw2+arw2+arw2, txt02=arw2+'OWT'+arw2+arw2+arw2;
+			txt0='player'+arw2+arw2+arw2, txt02='owt'+arw2+arw2+arw2+arw2;
 			break;
 		case 8:
 			txt0=lvl+'__________', txt02='level__________';
