@@ -5,7 +5,7 @@ var canvas = document.getElementById('canvas'),
 	step = shg = strt = 0,
 	scr1 = scr2 = 100,
 	clr = 180,
-	direct,prg,
+	direct,
 	blr = 100,
 	rad = 3, 
 	udr = 2,
@@ -20,7 +20,10 @@ var canvas = document.getElementById('canvas'),
 
 if (scrlh<scrlw) var vert = false, fsz = scrlh/7,arw1 = '→→→', arw2 = '←←←';
 else var vert = true, fsz = scrlw/7, arw1 = '↑↑↑', arw2 = '↓↓↓';
-if (fsz>80) fsz = 80;
+
+if (fsz>100) fsz = 100;
+var sko = 66 - fsz;
+if (sko<6) sko = 6;
 
 canvas.setAttribute('width', scrlw);
 canvas.setAttribute('height', scrlh);
@@ -28,7 +31,6 @@ canvas2.setAttribute('width', scrlw);
 canvas2.setAttribute('height', scrlh);
 
 lghtbx(15,0,0,6);
-
 
 canvas2.classList = 'viz';
 canvas2.onmousedown = omdown2;
@@ -181,7 +183,7 @@ function omdown2()
 		canvas2.onmousedown = null;
 		timer = setInterval(function() {
 	  		draw();
-		}, 10);
+		}, sko);
 		strt=1;
 	}
 	else 
@@ -254,11 +256,11 @@ function score(scrst,scrst2,win)
 
 		ctx.fillStyle = '#fff';
 
-		ctx.strokeRect(7,h2+25,5,h1);
-		ctx.fillRect(7,h2+25,5,h1);
+		ctx.strokeRect(7,h2+25,5,h1-5);
+		ctx.fillRect(7,h2+25,5,h1-5);
 
-		ctx.strokeRect(scrlw-11,h1+25,5,h2);
-		ctx.fillRect(scrlw-11,h1+25,5,h2);
+		ctx.strokeRect(scrlw-11,h1+25,5,h2-5);
+		ctx.fillRect(scrlw-11,h1+25,5,h2-5);
 	}
 }
 
@@ -282,22 +284,22 @@ canvas2.classList = 'viz';
 			s2=s2+col; s1=s1-col;
 			break;
 		case 3:
-			txt0='a_winner________', txt02='tsrif_si________';
+			txt0='A winner ________', txt02='!dnoces si ______';
 			break;
 		case 4:
-			txt0='a_winner_________', txt02='dnoces_si________';
+			txt0='A winner _______', txt02='!tsrif si ______';
 			break;
 		case 5:
-			txt0='game_________', txt02='revo_________';
+			txt0='Game ________', txt02='revo ________';
 			break;
 		case 6:
-			txt0='player'+arw1+arw1+arw1, txt02='eno'+arw1+arw1+arw1+arw1;
+			txt0='Player '+arw1+arw1+arw1+arw1+arw1+arw1, txt02=' eno '+arw1+arw1+arw1+arw1+arw1+arw1+arw1;
 			break;
 		case 7:
-			txt0='player'+arw2+arw2+arw2, txt02='owt'+arw2+arw2+arw2+arw2;
+			txt0='Player '+arw2+arw2+arw2+arw2+arw2+arw2+arw2, txt02=' owt '+arw2+arw2+arw2+arw2+arw2+arw2+arw2+arw2;
 			break;
 		case 8:
-			txt0=lvl+'__________', txt02='level__________';
+			txt0=lvl+' _________', txt02='leveL _________';
 			break;
 	}
 
