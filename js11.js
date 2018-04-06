@@ -8,9 +8,9 @@ var canvas = document.getElementById('canvas'),
 	direct,
 	blr = 100,
 	rad = 3, 
-	udr = 2,
+	udr = 1,
 	raddir = 0.1,
-	clrdir = 3,
+	clrdir = 2,
 	scrlh=document.body.clientHeight,
 	scrlw=document.body.clientWidth,
 	centrX = x = Math.round(scrlw/4)*2,
@@ -18,8 +18,8 @@ var canvas = document.getElementById('canvas'),
 	timer = anim = lvl = plr = 1,
 	lght = 85;
 
-if (scrlh<scrlw) var vert = false, fsz = scrlh/7,arw1 = '→→→', arw2 = '←←←';
-else var vert = true, fsz = scrlw/7, arw1 = '↑↑↑', arw2 = '↓↓↓';
+if (scrlh<scrlw) var vert = false, fsz = Math.round(scrlh/7),arw1 = '→→→', arw2 = '←←←';
+else var vert = true, fsz = Math.round(scrlw/7), arw1 = '↑↑↑', arw2 = '↓↓↓';
 
 if (fsz>100) fsz = 100;
 var sko = 66 - fsz;
@@ -33,6 +33,13 @@ canvas2.setAttribute('height', scrlh);
 lghtbx(15,0,0,9);
 
 canvas2.classList = 'viz';
+
+ctx.fillStyle = '#FFF';
+score();
+canvas.onmousedown = omdown;
+canvas.onmouseup = omup;
+canvas.addEventListener('touchstart', omdown,false);
+canvas.addEventListener('touchend', omup,false);
 
 function draw()
 {
@@ -83,8 +90,8 @@ function draw()
 			y=y-shg;
 			break;
 	}
-	if (clr >= 300) clrdir = -3;
-	else if (clr <= 180) clrdir = 3;
+	if (clr >= 300 && clrdir != 0) clrdir = -2;
+	else if (clr <= 180 && clrdir != 0) clrdir = 2;
 	if (blr == 0) blr = 100;
 	if (rad > 30) raddir = -0.1;
 	if (rad < 5 && rad > 0) raddir = 0.1;
@@ -126,12 +133,6 @@ function draw()
 	ctx.fill();
 	ctx.stroke();
 }
-ctx.fillStyle = '#FFF';
-score();
-canvas.onmousedown = omdown;
-canvas.onmouseup = omup;
-canvas.addEventListener('touchstart', omdown,false);
-canvas.addEventListener('touchend', omup,false);
 function pwin(win)
 {
 	clearTimeout(timer);
@@ -162,17 +163,19 @@ function pwin(win)
 }
 function omdown()
 {
-	udr = clr - 160;
+	udr = clr - 165;
 	step = 0;
 	clrdir = 0;
 	ctx.lineWidth =0;
 	lght = 85;
+	console.log(fsz);
+	console.log(udr);
 }
 function omup()
 {
-	udr = 2;
+	udr = 1;
 	step = 0;
-	clrdir = 3;
+	clrdir = 2;
 	ctx.lineWidth = 2;
 	lght = 80;
 }
@@ -196,7 +199,7 @@ function omdown2(win)
 		case 7:
 			clearInterval(anim);
 			canvas2.classList = '';
-			udr = 2;
+			udr = 1;
 			shg = 4;
 			canvas2.onmousedown = null;
 			timer = setInterval(function() {
@@ -269,16 +272,11 @@ function score()
 
 		ctx.fillStyle = '#fff';
 
-/*		if (h1 < 0) h1=0;
-		if (h2 < 0) h2=0;*/
+		ctx.strokeRect(7,h2+25,5,h1-5);
+		ctx.fillRect(7,h2+25,5,h1-5);
 
-		ctx.strokeRect(7,h2+35,5,h1-10);
-		ctx.fillRect(7,h2+35,5,h1-10);
-
-		ctx.strokeRect(scrlw-11,h1+35,5,h2-10);
-		ctx.fillRect(scrlw-11,h1+35,5,h2-10);
-		console.log(h1);
-		console.log(h2);
+		ctx.strokeRect(scrlw-11,h1+25,5,h2-5);
+		ctx.fillRect(scrlw-11,h1+25,5,h2-5);
 	}
 }
 
