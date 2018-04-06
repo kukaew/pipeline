@@ -2,7 +2,7 @@ var canvas = document.getElementById('canvas'),
 	canvas2 = document.getElementById('canvas2'),
 	ctx = canvas.getContext('2d'),
 	ctx2 = canvas2.getContext('2d'),
-	step = shg = strt = 0,
+	step = shg = 0,
 	scr1 = scr2 = 100,
 	clr = 180,
 	direct,
@@ -30,10 +30,10 @@ canvas.setAttribute('height', scrlh);
 canvas2.setAttribute('width', scrlw);
 canvas2.setAttribute('height', scrlh);
 
-lghtbx(15,0,0,6);
+lghtbx(15,0,0,9);
 
 canvas2.classList = 'viz';
-canvas2.onmousedown = omdown2;
+
 function draw()
 {
 	ctx.lineWidth = 2;
@@ -127,7 +127,7 @@ function draw()
 	ctx.stroke();
 }
 ctx.fillStyle = '#FFF';
-score(scr1,scr2);
+score();
 canvas.onmousedown = omdown;
 canvas.onmouseup = omup;
 canvas.addEventListener('touchstart', omdown,false);
@@ -151,7 +151,12 @@ function pwin(win)
 		lghtbx(15,0,0,4);
 		scr1 = scr2 = 100;
 	}
-	else score(scr1,scr2,win);
+	else {
+		score();
+		if (win==1) lghtbx(rad,scr1,scr2,1);
+		else lghtbx(rad,scr1,scr2,2);
+	}
+
 	rad=3;
 	step = 0;
 }
@@ -171,31 +176,38 @@ function omup()
 	ctx.lineWidth = 2;
 	lght = 80;
 }
-function omdown2()
+function omdown2(win)
 {
-	console.log(strt);
-	if (!strt)
-	{
-		clearInterval(anim);
-		canvas2.classList = '';
-		udr = 2;
-		shg = 4;
-		canvas2.onmousedown = null;
-		timer = setInterval(function() {
-	  		draw();
-		}, sko);
-		strt=1;
-	}
-	else 
-	{
-		clearInterval(anim);
-		switch (strt) {
-			case 1:
-				strt=0;
-				if (plr==1) plr = 2; else plr = 1;
-				lghtbx(15,0,0,plr+5);
+	switch (win) {
+		case 1:
+		case 2:
+			if (plr==1) plr = 2; else plr = 1;
+			lghtbx(15,0,0,plr+5);
 			break;
-		}
+		case 3: 
+		case 4:
+			scr1 = scr2 = 100;
+			score();
+			if (plr==1) plr = 2; else plr = 1;
+			lghtbx(15,0,0,plr+5);
+			break;
+		case 5:
+		case 6:
+		case 7:
+			clearInterval(anim);
+			canvas2.classList = '';
+			udr = 2;
+			shg = 4;
+			canvas2.onmousedown = null;
+			timer = setInterval(function() {
+		  		draw();
+			}, sko);
+			break;
+		case 8:
+
+		case 9:
+			lghtbx(15,0,0,6);
+			break;
 	}
 }
 function rnd(min, max)
@@ -219,12 +231,9 @@ function saveCanvasAsImageFile()
 	link.setAttribute("download", "madball");
 	link.click();
 }
-function score(scrst,scrst2,win)
+function score()
 {
 	ctx.beginPath();
-	if (win==1) lghtbx(rad,scr1,scr2,1);
-	else if (win==2) lghtbx(rad,scr1,scr2,2);
-
 	ctx.lineWidth = 4;
 	if (vert)
 	{
@@ -238,11 +247,15 @@ function score(scrst,scrst2,win)
 
 		ctx.fillStyle = '#fff';
 
-		ctx.strokeRect(15,6,h1,5);
-		ctx.fillRect(15,6,h1,5);
 
-		ctx.strokeRect(15,scrlh-11,h2,5);
-		ctx.fillRect(15,scrlh-11,h2,5);
+		if (h1 < 0) h1=10;
+		if (h2 < 0) h2=10;
+
+		ctx.strokeRect(15,6,h1-10,5);
+		ctx.fillRect(15,6,h1-10,5);
+
+		ctx.strokeRect(15,scrlh-11,h2-10,5);
+		ctx.fillRect(15,scrlh-11,h2-10,5);
 	}
 	else 
 	{    
@@ -256,14 +269,18 @@ function score(scrst,scrst2,win)
 
 		ctx.fillStyle = '#fff';
 
-		ctx.strokeRect(7,h2+25,5,h1-5);
-		ctx.fillRect(7,h2+25,5,h1-5);
+/*		if (h1 < 0) h1=0;
+		if (h2 < 0) h2=0;*/
 
-		ctx.strokeRect(scrlw-11,h1+25,5,h2-5);
-		ctx.fillRect(scrlw-11,h1+25,5,h2-5);
+		ctx.strokeRect(7,h2+35,5,h1-10);
+		ctx.fillRect(7,h2+35,5,h1-10);
+
+		ctx.strokeRect(scrlw-11,h1+35,5,h2-10);
+		ctx.fillRect(scrlw-11,h1+35,5,h2-10);
+		console.log(h1);
+		console.log(h2);
 	}
 }
-
 
 function lghtbx(col,s1,s2,win){
 
@@ -273,8 +290,8 @@ canvas2.classList = 'viz';
 	ctx2.clearRect(0,0,scrlw,scrlh);
 	var xs=ys=-4,xs2=ys2=4,clrs=5,txt=txt2='',clr2=300,xl=yl=xl2=yl2=itr=0,txt0=txt02='';
 
-	if (win>2) var xr=scrlw/2,xr2=scrlw/2,yr=scrlh/2-fsz/2,yr2=scrlh/2+fsz/2,spd=5;
-	else var xr=scrlw/2,xr2=scrlw/2,yr=scrlh/2,yr2=scrlh/2,spd=15;
+	if (win>2) var xr=xr0=scrlw/2-fsz,xr2=xr02=scrlw/2+fsz,yr=yr0=scrlh/2-fsz/2,yr2=yr02=scrlh/2+fsz/2,spd=5;
+	else var xr=xr0=scrlw/2,xr2=xr02=scrlw/2,yr=yr0=scrlh/2,yr2=yr02=scrlh/2,spd=15;
 
 	switch (win) {
 		case 1:
@@ -299,7 +316,10 @@ canvas2.classList = 'viz';
 			txt0='Player '+arw2+arw2+arw2+arw2+arw2+arw2+arw2, txt02=' owt '+arw2+arw2+arw2+arw2+arw2+arw2+arw2+arw2;
 			break;
 		case 8:
-			txt0=lvl+' _________', txt02='leveL _________';
+			txt02=lvl+'__________', txt0='leveL______';
+			break;
+		case 9:
+			txt0='Druzhba   ', txt02='enilepip  ';
 			break;
 	}
 
@@ -310,7 +330,7 @@ canvas2.classList = 'viz';
 
 	anim=setInterval(function(){
 
-		itr=itr+col/(spd*4);
+		itr=itr+col/(spd*3.5);
 
 		switch (win) {
 			case 1:
@@ -325,6 +345,7 @@ canvas2.classList = 'viz';
 			case 6:
 			case 7:
 			case 8:
+			case 9:
 				txt=txt0[s1], txt2=txt02[s2];
 				break;
 		}
@@ -351,11 +372,13 @@ canvas2.classList = 'viz';
 		if (clr2==180) clrs=5;
 		if (clr2==300) clrs=-5;
 		clr2=clr2+clrs;
-		if (itr>=col && win < 3) itr=xl=yl=xl2=yl2=0, canvas2.onmousedown = omdown2;
+		if (itr>=col && win < 3) itr=xl=yl=xl2=yl2=0;
 		else if (itr>=col && win > 2) {
 			s2++, s1++, itr=xl=yl=xl2=yl2=0, xr = xr + fsz/1.75, xr2 = xr2 - fsz/1.75;
-			if (s1 >= txt0.length) s1=s2=0,xr=scrlw/2,xr2=scrlw/2,yr=scrlh/2-fsz/2,yr2=scrlh/2+fsz/2;
-			canvas2.onmousedown = omdown2;
+			if (s1 >= txt0.length) s1=s2=0,xr=xr0,xr2=xr02,yr=yr0,yr2=yr02;
+		}
+		canvas2.onmousedown = function() {
+			omdown2(win);
 		}
 	},spd)
 }
