@@ -1,5 +1,5 @@
-# pipeline
-Druzhba pipeline great game
+# Druzhba pipeline. Great game
+Great russian game
 
 ![Druzhba pipeline](mstile-150x150.png)
 ![Druzhba pipeline](ps.png)
