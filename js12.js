@@ -22,8 +22,8 @@ var canvas=document.getElementById('canvas'),
 	timer=anim=plr=udr=1,
 	lght=85;
 
-if (scrlh<scrlw) var vert=false, fsz=Math.round(scrlh/7),arw1=' → ', arw2=' ← ';
-else var vert=true, fsz=Math.round(scrlw/7), arw1=' ↑ ', arw2=' ↓ ';
+if (scrlh<scrlw) var vert=false, fsz=Math.round(scrlh/7),arw1=' \u2192 ', arw2=' \u2190 ';
+else var vert=true, fsz=Math.round(scrlw/7), arw1=' \u2191 ', arw2=' \u2193 ';
 
 if (fsz>100) fsz=100;
 var sko=70-fsz;
