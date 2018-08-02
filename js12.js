@@ -1,4 +1,6 @@
-var canvas=document.getElementById('canvas'),
+window.onload = function(){
+
+	var canvas=document.getElementById('canvas'),
 	canvas2=document.getElementById('canvas2'),
 	canvas3=document.getElementById('canvas3'),
 	img=document.getElementById('img'),
@@ -22,15 +24,14 @@ var canvas=document.getElementById('canvas'),
 	timer=anim=plr=udr=1,
 	lght=85;
 
-if (scrlh<scrlw) var vert=false, fsz=Math.round(scrlh/7),arw1=' \u2192 ', arw2=' \u2190 ';
-else var vert=true, fsz=Math.round(scrlw/7), arw1=' \u2191 ', arw2=' \u2193 ';
+	if (scrlh<scrlw) var vert=false, fsz=Math.round(scrlh/7),arw1=' \u2192 ', arw2=' \u2190 ';
+	else var vert=true, fsz=Math.round(scrlw/7), arw1=' \u2191 ', arw2=' \u2193 ';
 
-if (fsz>100) fsz=100;
-var sko=70-fsz;
-if (sko<8) sko=8;
-console.log(sko);
-
-window.onload = function(){
+	if (fsz>100) fsz=100;
+	var sko=70-fsz;
+	if (sko<8) sko=8;
+	console.log(sko);
+	
 	canvas.setAttribute('width', scrlw);
 	canvas.setAttribute('height', scrlh);
 	canvas2.setAttribute('width', scrlw);
