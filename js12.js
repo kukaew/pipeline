@@ -1,37 +1,37 @@
 
-	var canvas=document.getElementById('canvas'),
-	canvas2=document.getElementById('canvas2'),
-	canvas3=document.getElementById('canvas3'),
-	img=document.getElementById('img'),
-	p1=document.getElementById('p1'),
-	p2=document.getElementById('p2'),
-	ctx=canvas.getContext('2d'),
-	ctx2=canvas2.getContext('2d'),
-	ctx3=canvas3.getContext('2d'),
-	step=shg=lvl=mltp=0,
-	scr1=scr2=100,
-	clr=180,
-	drct,
-	blr=100,
-	rad=3,
-	raddir=0.1,
-	clrdir=2,
-	scrlh=window.innerHeight,
-	scrlw=window.innerWidth,
-	centrX=x=Math.round(scrlw/4)*2,
-	centrY=y=Math.round(scrlh/4)*2,
-	timer=anim=plr=udr=1,
-	lght=85;
+var canvas=document.getElementById('canvas'),
+canvas2=document.getElementById('canvas2'),
+canvas3=document.getElementById('canvas3'),
+img=document.getElementById('img'),
+p1=document.getElementById('p1'),
+p2=document.getElementById('p2'),
+ctx=canvas.getContext('2d'),
+ctx2=canvas2.getContext('2d'),
+ctx3=canvas3.getContext('2d'),
+step=shg=lvl=mltp=0,
+scr1=scr2=100,
+clr=180,
+drct,
+blr=100,
+rad=3,
+raddir=0.1,
+clrdir=2,
+scrlh=window.innerHeight,
+scrlw=window.innerWidth,
+centrX=x=Math.round(scrlw/4)*2,
+centrY=y=Math.round(scrlh/4)*2,
+timer=anim=plr=udr=1,
+lght=85;
 
-window.onload = function(){
-	if (scrlh<scrlw) var vert=false, fsz=Math.round(scrlh/7),arw1=' \u2192 ', arw2=' \u2190 ';
-	else var vert=true, fsz=Math.round(scrlw/7), arw1=' \u2191 ', arw2=' \u2193 ';
+if (scrlh<scrlw) var vert=false, fsz=Math.round(scrlh/7),arw1=' \u2192 ', arw2=' \u2190 ';
+else var vert=true, fsz=Math.round(scrlw/7), arw1=' \u2191 ', arw2=' \u2193 ';
 
-	if (fsz>100) fsz=100;
-	var sko=70-fsz;
-	if (sko<8) sko=8;
-	console.log(sko);
-	
+if (fsz>100) fsz=100;
+var sko=70-fsz;
+if (sko<8) sko=8;
+console.log(sko);
+
+window.onload = function(){	
 	canvas.setAttribute('width', scrlw);
 	canvas.setAttribute('height', scrlh);
 	canvas2.setAttribute('width', scrlw);
