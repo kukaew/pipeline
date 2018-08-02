@@ -1,4 +1,3 @@
-window.onload = function(){
 
 	var canvas=document.getElementById('canvas'),
 	canvas2=document.getElementById('canvas2'),
@@ -24,6 +23,7 @@ window.onload = function(){
 	timer=anim=plr=udr=1,
 	lght=85;
 
+window.onload = function(){
 	if (scrlh<scrlw) var vert=false, fsz=Math.round(scrlh/7),arw1=' \u2192 ', arw2=' \u2190 ';
 	else var vert=true, fsz=Math.round(scrlw/7), arw1=' \u2191 ', arw2=' \u2193 ';
 
