@@ -41,4 +41,5 @@ button {
 	font: normal 3rem/normal monospace;
 	color: #fff;
 	text-shadow: 1px 1px #3a2060;
+	user-select: none;
 }
