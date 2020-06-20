@@ -29,8 +29,7 @@ body {
 #bg, #canvas3 {pointer-events: none}
 #bg {
 	opacity: .2;
-	background-image: url('data:image/svg+xml,<?xml version="1.0" encoding="utf-8"?> <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2px" height="2px" viewBox="0 0 2 2" enable-background="new 0 0 600 600" xml:space="preserve"> <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="0" y1="0.5" x2="600" y2="0.5"/> </svg>');
-	z-index: 10;
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='2px' height='2px' viewBox='0 0 2 2' enable-background='new 0 0 600 600' xml:space='preserve'%3e%3cline fill='none' stroke='%23000000' stroke-miterlimit='10' x1='0' y1='0.5' x2='600' y2='0.5'/%3e%3c/svg%3e");z-index: 10;
 }
 button {
 	position: fixed;
